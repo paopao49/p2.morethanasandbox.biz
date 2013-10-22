@@ -35,6 +35,9 @@ class users_controller extends base_controller {
         $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 
         $user_id = DB::instance(DB_NAME)->insert('users',$_POST);
+
+        # developing instant sign-in after sign up
+        Router::redirect("/users/login");
     }
 
     public function login($error = NULL) {
