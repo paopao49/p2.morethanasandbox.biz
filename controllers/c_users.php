@@ -36,7 +36,9 @@ class users_controller extends base_controller {
 
         $user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 
-        # developing instant sign-in after sign up
+        # error checking needed? -------------------------------------------------
+
+        # developing instant sign-in after sign up -------------------------------------
         Router::redirect("/users/login");
     }
 
@@ -57,35 +59,6 @@ class users_controller extends base_controller {
 
         echo $this->template;
     }
-
-   /* 
-    public function p_login() {
-
-        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
-
-        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
-
-        $q = "
-            SELECT token
-            FROM users
-            WHERE
-                email = '".$_POST['email']."'
-                AND password = '".$_POST['password']."'
-            ";
-
-        $token = DB::instance(DB_NAME)->select_field($q);
-
-        if(!$token) {
-            Router::redirect("/users/login/error");
-        } else {
-            setcookie("token",$token,strtotime('+1 year'),'/');
-
-            Router::redirect("/");
-        }
-    }
-    */
-        
-
     
     public function p_login() {
 
