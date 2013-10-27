@@ -11,19 +11,18 @@
 	<br><br>
 
 	<!-- When appropriate, display error messages -->
-	<?php
 
-		if($error == 'no_email') {
+	<?php if($error == 'no_email'): ?>
 
-			echo '<div class="error">No email registered with us. Sign up today!</div><br>';
+		<div class="error">No email registered with us. Sign up today!</div>
+		<br>
 
-		} elseif ($error == 'no_token') {
+	<?php elseif($error == 'no_token'): ?>
 
-			echo '<div class="error">Incorrect password. Please try again.</div><br>';
+		<div class="error">Incorrect password. Please try again.</div>
+		<br>
 
-		}
-
-	?>		
+	<?php endif; ?>
 
 	<input type='submit' value='Log In'>
 

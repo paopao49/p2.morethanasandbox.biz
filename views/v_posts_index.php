@@ -1,15 +1,26 @@
-<?php foreach($posts as $post): ?>
+<?php if(!$posts): ?>
 
-<article>
+	You're not following anyone!
+	<br><br>
 
-	<h1><?=$post['first_name']?> <?=$post['last_name']?> posted:</h1>
+	<a href='/posts/users'>Make friends!</a>
 
-	<p><?=$post['content']?></p>
+<?php else: ?>
 
-	<time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
-		<?=Time::display($post['created'])?>
-	</time>
+	<?php foreach($posts as $post): ?>
 
-</article>
+		<article>
 
-<?php endforeach; ?>
+			<h1><?=$post['first_name']?> <?=$post['last_name']?> posted:</h1>
+
+			<p><?=$post['content']?></p>
+
+			<time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
+				<?=Time::display($post['created'])?>
+			</time>
+
+		</article>
+
+	<?php endforeach; ?>
+
+<?php endif; ?>

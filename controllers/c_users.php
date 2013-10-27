@@ -2,53 +2,80 @@
 class users_controller extends base_controller {
 
     public function __construct() {
+
         parent::__construct();
+
     } 
 
     public function index() {
-        echo "This is the index page";
+
+        if(!$this->user) {
+            Router::redirect("/users/login");
+        } else {
+            Router::redirect("/");
+        }
+        
     }
 
     public function signup() {
 
-        $this->template->content = View::instance('v_users_signup');
-        $this->template->title = "Sign up with Chatster!";
+        if(!$this->user) {
 
-        $client_files_head = Array(
-            );
-        $this->template->client_files_head = Utils::load_client_files($client_files_head);
+            $this->template->content = View::instance('v_users_signup');
+            $this->template->title = "Sign up with Chatster!";
 
-        $client_files_body = Array(
-            );
-        $this->template->client_files_body = Utils::load_client_files($client_files_body);
+            /* for formatting
+            $client_files_head = Array(
+                );
+            $this->template->client_files_head = Utils::load_client_files($client_files_head);
 
-        echo $this->template;
+            $client_files_body = Array(
+                );
+            $this->template->client_files_body = Utils::load_client_files($client_files_body);
+            */
+
+            echo $this->template;
+
+        } else {
+
+            Router::redirect("/");
+
+        }
     }
 
     public function p_signup() {
 
-        $_POST['created'] = Time::now();
-        $_POST['modified'] = Time::now();
+        if($_POST) {
 
-        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+            $_POST['created'] = Time::now();
+            $_POST['modified'] = Time::now();
 
-        $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+            $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
-        $user_id = DB::instance(DB_NAME)->insert('users',$_POST);
+            $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 
-        # error checking needed? -------------------------------------------------
+            $user_id = DB::instance(DB_NAME)->insert('users',$_POST);
 
+            Router::redirect("/users/login");
+
+        } else {
+
+            Router::redirect("/users/signup");
+
+        }
         # developing instant sign-in after sign up -------------------------------------
-        Router::redirect("/users/login");
     }
 
     public function login($error = NULL) {
+
+        if(!$this->user) {
 
         $this->template->content = View::instance('v_users_login');
         $this->template->content->error = $error;
 
         $this->template->title = "Log in to Chatster!";
 
+        /* for formatting
         $client_files_head = Array(
             );
         $this->template->client_files_head = Utils::load_client_files($client_files_head);
@@ -56,45 +83,60 @@ class users_controller extends base_controller {
         $client_files_body = Array(
             );
         $this->template->client_files_body = Utils::load_client_files($client_files_body);
+        */
 
         echo $this->template;
+
+        } else {
+
+            Router::redirect("/");
+
+        }
+
     }
     
     public function p_login() {
 
-        $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+        if($_POST) {
 
-        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+            $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
-        $q_token = "
-            SELECT token
-            FROM users
-            WHERE
-                email = '".$_POST['email']."'
-                AND password = '".$_POST['password']."'
-            ";
+            $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
-        $q_email = "
-            SELECT email
-            FROM users
-            WHERE
-                email = '".$_POST['email']."'
-            ";
+            $q_token = "
+                SELECT token
+                FROM users
+                WHERE
+                    email = '".$_POST['email']."'
+                    AND password = '".$_POST['password']."'
+                ";
 
-        $token = DB::instance(DB_NAME)->select_field($q_token);
-        $em = DB::instance(DB_NAME)->select_field($q_email);
+            $q_email = "
+                SELECT email
+                FROM users
+                WHERE
+                    email = '".$_POST['email']."'
+                ";
 
-        if(!$em) {
+            $token = DB::instance(DB_NAME)->select_field($q_token);
+            $em = DB::instance(DB_NAME)->select_field($q_email);
 
-            Router::redirect("/users/login/no_email");
+            if(!$em) {
 
-        } elseif(!$token) {
+                Router::redirect("/users/login/no_email");
 
-            Router::redirect("/users/login/no_token");
+            } elseif(!$token) {
+
+                Router::redirect("/users/login/no_token");
+
+            } else {
+
+                setcookie("token",$token,strtotime('+1 year'),'/');
+
+                Router::redirect("/");
+            }
 
         } else {
-
-            setcookie("token",$token,strtotime('+1 year'),'/');
 
             Router::redirect("/");
         }
@@ -102,6 +144,7 @@ class users_controller extends base_controller {
     
 
     public function logout() {
+        
         $new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
 
         $data = Array("token" => $new_token);
@@ -122,6 +165,7 @@ class users_controller extends base_controller {
         $this->template->content = View::instance('v_users_profile');
         $this->template->title = "Profile of ".$this->user->first_name;
 
+        /* for formatting
         $client_files_head = Array(
             "/css/widgets.css",
             "/css/profile.css"
@@ -134,6 +178,7 @@ class users_controller extends base_controller {
             );
         
         $this->template->client_files_body = Utils::load_client_files($client_files_body);
+        */
 
         echo $this->template;
 
