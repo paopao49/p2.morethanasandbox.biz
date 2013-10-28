@@ -1,5 +1,15 @@
 <form method='POST' action='/users/p_signup'>
 
+	<?php if($error=='error'): ?>
+		<p>All fields required. Please try again.<p>
+		<br>
+		
+	<?php elseif($error=='duplicate_email'): ?>
+		<p>Email already exists in system.</p>
+		<br>
+		
+	<?php endif; ?>
+
 	Welcome to Chatster! Fill in your details below to get started.<br><br>
 
 	First Name<br>

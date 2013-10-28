@@ -17,12 +17,13 @@ class users_controller extends base_controller {
         
     }
 
-    public function signup() {
+    public function signup($error = NULL) {
 
         if(!$this->user) {
 
             $this->template->content = View::instance('v_users_signup');
             $this->template->title = "Sign up with Chatster!";
+            $this->template->content->error = $error;            
 
             /* for formatting
             $client_files_head = Array(
@@ -47,23 +48,63 @@ class users_controller extends base_controller {
 
         if($_POST) {
 
-            $_POST['created'] = Time::now();
-            $_POST['modified'] = Time::now();
+            # Test if all fields are entered
+            if( !$_POST['first_name'] or
+                !$_POST['last_name'] or
+                !$_POST['email'] or
+                !$_POST['password']
+            ) {
 
-            $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+                Router::redirect("/users/signup/error");
 
-            $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+            } else {
 
-            $user_id = DB::instance(DB_NAME)->insert('users',$_POST);
+                $q_email = "
+                    SELECT email
+                    FROM users
+                    WHERE
+                        email = '".$_POST['email']."'
+                ";
 
-            Router::redirect("/users/login");
+                $existing_email = DB::instance(DB_NAME)->select_field($q_email);
+
+                # Test if email already exists
+                if($existing_email) {
+
+                    Router::redirect("/users/signup/duplicate_email");
+
+                } else {
+
+                    $_POST['created'] = Time::now();
+                    $_POST['modified'] = Time::now();
+
+                    $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+
+                    $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+
+                    $user_id = DB::instance(DB_NAME)->insert('users',$_POST);
+
+                    $q_token = "
+                        SELECT token
+                        FROM users
+                        WHERE
+                            user_id = ".$user_id
+                        ;
+
+                    $token = DB::instance(DB_NAME)->select_field($q_token);
+
+                    setcookie("token",$token,strtotime('+1 year'),'/');
+
+                    Router::redirect("/");
+
+                }
+            }
 
         } else {
 
             Router::redirect("/users/signup");
 
         }
-        # developing instant sign-in after sign up -------------------------------------
     }
 
     public function login($error = NULL) {

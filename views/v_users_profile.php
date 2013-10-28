@@ -7,4 +7,4 @@
 <a href="/posts/add">Make a post.</a>
 <br>
 
-<a href="/posts/">See posts made by your friends.</a>
+<a href="/posts/">Your post feed!</a>

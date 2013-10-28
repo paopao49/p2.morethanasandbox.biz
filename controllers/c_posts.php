@@ -14,7 +14,10 @@ class posts_controller extends base_controller {
 
 		$this->template->content = View::instance('v_posts_index');
 		$this->template->title = "All Posts";
+		$this->template->content->user_id = $this->user->user_id;
 
+		# Always see own posts
+		# Sort in reverse chronological order
 		$q = "
 			SELECT
 				posts.content,
@@ -24,19 +27,26 @@ class posts_controller extends base_controller {
 				users.first_name,
 				users.last_name
 			FROM posts
-			INNER JOIN users_users
+			LEFT JOIN users_users
 				ON posts.user_id = users_users.user_id_followed
 			INNER JOIN users
 				on posts.user_id = users.user_id
 			WHERE
-				users_users.user_id = ".$this->user->user_id
+				(users_users.user_id = ".$this->user->user_id."
+				OR users.user_id =".$this->user->user_id.")
+			ORDER BY 
+				posts.created desc"
 			;
 
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 
 		$this->template->content->posts = $posts;
 
-		echo $this->template;
+		echo '<pre>';
+		print_r($posts);
+		echo '</pre>';
+
+		# echo $this->template;
 
 	}	
 
@@ -59,7 +69,7 @@ class posts_controller extends base_controller {
 
 			DB::instance(DB_NAME)->insert('posts',$_POST);
 
-			echo "Your post has been added. <a href='/posts/add'>Add another</a>";
+			Router::redirect("/posts/");
 
 		} else {
 
@@ -68,15 +78,19 @@ class posts_controller extends base_controller {
 
 	}
 
-	public function users() {
+	public function users($error = NULL) {
 
 		$this->template->content = View::instance("v_posts_users");
 		$this->template->title = "Users";
+		$this->template->content->error = $error;
 
+		# Filter out self so user cannot follow self
 		$q = "
 			SELECT *
 			FROM users
-			";
+			WHERE
+				user_id !=".$this->user->user_id
+			;
 
 		$users = DB::instance(DB_NAME)->select_rows($q);
 
@@ -96,17 +110,54 @@ class posts_controller extends base_controller {
 
 	}
 
-	public function follow($user_id_followed) {
+	public function follow($user_id_followed = NULL) {
 
-		$data = Array(
-			"created" => Time::now(),
-			"user_id" => $this->user->user_id,
-			"user_id_followed" => $user_id_followed
-			);
+		# Test if user tries to call follow method without an argument
+		if(!$user_id_followed) {
 
-		DB::instance(DB_NAME)->insert('users_users', $data);
+			Router::redirect("/posts/users");
 
-		Router::redirect("/posts/users");
+		} else {
+
+	        $q_follow_user = "
+	            SELECT user_id_followed
+	            FROM users_users
+	            WHERE
+	            	user_id = '".$this->user->user_id."'
+	            	AND user_id_followed = ".$user_id_followed
+	        ;
+
+	        $followed_user = DB::instance(DB_NAME)->select_field($q_follow_user);	
+
+	        $q_any_user = "
+	            SELECT user_id
+	            FROM users
+	            WHERE
+	            	user_id = ".$user_id_followed
+	        ;
+
+	        $any_user = DB::instance(DB_NAME)->select_field($q_any_user);	     
+
+        	# Test if user is trying to follow someone the user is already following AND
+	       	# Test if the user is trying to follow someone who doesn't exist
+	      	if($followed_user or !$any_user) {
+
+	      		Router::redirect("/posts/users/error");
+
+	      	} else {
+
+				$data = Array(
+					"created" => Time::now(),
+					"user_id" => $this->user->user_id,
+					"user_id_followed" => $user_id_followed
+					);
+
+				DB::instance(DB_NAME)->insert('users_users', $data);
+
+				Router::redirect("/posts/users");
+
+			}
+		}
 	}
 
 	public function unfollow($user_id_followed) {

@@ -1,3 +1,7 @@
+<?php if($error == 'error'): ?>
+    <p>You are either trying to follow a user that you're already following or doesn't exist.</p>
+<?php endif; ?>
+
 <?php foreach($users as $user): ?>
 
     <?=$user['first_name']?> <?=$user['last_name']?>
