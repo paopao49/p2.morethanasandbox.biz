@@ -1,5 +1,5 @@
-<?php if($error == 'error'): ?>
-    <p>You are either trying to follow a user that you're already following or doesn't exist.</p>
+<?php if($error == 'follow_error'): ?>
+    <p>You can't follow a user that you're already following or follow a user that doesn't exist.</p>
 <?php endif; ?>
 
 <?php foreach($users as $user): ?>
