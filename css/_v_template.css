@@ -1,0 +1,36 @@
+body {
+	font-family: Georgia, Arial, sans-serif;
+	font-size: 16px;
+	color: black;
+	width: 50%;
+	margin: 10px auto;
+	text-align: center;
+	background-color: #FFFFFF;		
+	/*border: solid black 5px;*/
+}
+
+#menu {
+	background-color: #191919;
+	text-align: left;
+	height: 20px;
+	padding: 5px 0px;
+	/*font-weight: bolder;*/
+}
+
+#menu .menu_right {
+	float:right;
+}
+
+#menu a, #menu a:link, #menu a:visited, #menu a:active {
+	margin: 0px 10px;
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+#menu a:hover {
+	margin: 0px 10px;
+	text-decoration: none;
+	color: #191919;
+	background-color: #FFF056;
+}
+

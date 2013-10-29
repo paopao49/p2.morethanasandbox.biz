@@ -1,0 +1,25 @@
+/*need to qualify using .profile_body to separate CSS of body links from CSS of header links*/
+
+.profile_body h1 {
+	margin-top: 20px;
+	font-size: 20px;
+}
+
+.profile_body #app_buttons {
+	margin-top: 40px;
+}
+
+.profile_body a, .profile_body a:link, .profile_body a:visited, .profile_body a:active {
+	text-decoration: none;
+	color: #191919;	
+	background-color: #DFE2DB;
+	padding: 45px;
+	margin: 0px 2px;	
+}
+
+.profile_body a:hover {
+	text-decoration: none;
+	color: #191919;
+	background-color: #FFF056;	
+	padding: 44px;
+}

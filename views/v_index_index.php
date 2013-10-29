@@ -1,19 +1,24 @@
+<!-- Home page if signed in -->
+<div class='index_body'>
 <?php if($user): ?>
 
-	<h1>Hi <?=$user->first_name?>, welcome to Chatster!</h1>
-
-	<a href="/posts/users">Find friends.</a>
+	<h1>Hi <?=$user->first_name?>!</h1>
 	<br>
 
-	<a href="/posts/add">Make a post.</a>
-	<br>
+	<!-- Groups app buttons together -->
+	<div id='app_buttons'>
+		<a href="/posts/users">Make friends.</a>
 
-	<a href="/posts/">Your post feed!</a>
+		<a href="/posts/add">Say something.</a>
 
+		<a href="/posts/">Read your stream!</a>
+	</div>
+
+<!-- Home page if not signed in -->
 <?php else: ?>
 
 	<h1>Welcome to Chatster!</h1>
-	<br>
+
 	<p>Extra features:</p>
 	<ul>
 		<li>Ability to delete posts</li>
@@ -26,3 +31,4 @@
 	<a href="/users/login">Log In</a>
 
 <?php endif; ?>
+</div>

@@ -4,7 +4,9 @@
 	<title><?php if(isset($title)) echo $title; ?></title>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
-					
+	
+	<link rel="stylesheet" type="text/css" href="/css/_v_template.css">
+
 	<!-- Controller Specific JS/CSS -->
 	<?php if(isset($client_files_head)) echo $client_files_head; ?>
 	
@@ -12,15 +14,24 @@
 
 <body>	
 
+	<!-- Menu that is persistent throughout application -->
 	<div id='menu'>
-		<a href='/'>Home</a>
+
+		<!-- Home link -->
+		<a href='/'>Chatster</a>
+
 		<?php if($user): ?>
-			<a href='/users/logout'>Log out</a>
-			<a href='/users/profile'>Profile</a>
+
+			<a class='menu_right' href='/users/logout'>Log out</a>			
+			<a class='menu_right' href='/users/profile'>Profile</a>
+
 		<?php else: ?>
-			<a href='/users/signup'>Sign Up</a>
-			<a href='/users/login'>Log In</a>
+
+			<a class='menu_right' href='/users/login'>Log In</a>
+			<a class='menu_right' href='/users/signup'>Sign Up</a>			
+
 		<?php endif; ?>
+
 	</div>
 	<br>
 

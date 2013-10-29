@@ -1,10 +1,15 @@
-<h1>This is the profile of <?=$user->first_name?></h1>
+<div class='profile_body'>
+
+<h1>Your name is <?=$user->first_name?>!</h1>
 <br>
 
-<a href="/posts/users">Find friends.</a>
-<br>
+<!-- Groups app buttons together -->
+<div id='app_buttons'>
+	<a href="/posts/users">Make friends.</a>
 
-<a href="/posts/add">Make a post.</a>
-<br>
+	<a href="/posts/add">Say something.</a>
 
-<a href="/posts/">Your post feed!</a>
+	<a href="/posts/">Read your stream!</a>
+</div>
+
+</div>

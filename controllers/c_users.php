@@ -204,15 +204,15 @@ class users_controller extends base_controller {
         }
 
         $this->template->content = View::instance('v_users_profile');
-        $this->template->title = "Profile of ".$this->user->first_name;
+        $this->template->title = $this->user->first_name;
 
-        /* for formatting
         $client_files_head = Array(
-            "/css/widgets.css",
-            "/css/profile.css"
-            );
-        $this->template->client_files_head = Utils::load_client_files($client_files_head);
+            "/css/v_users_profile.css"
+        );
 
+        $this->template->client_files_head = Utils::load_client_files($client_files_head);        
+
+        /*
         $client_files_body = Array(
             "/js/profile.min.js",
             "/js/widgets.min.js"
