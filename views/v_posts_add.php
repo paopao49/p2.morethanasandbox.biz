@@ -1,9 +1,8 @@
 <form method='POST' action='/posts/p_add'>
 
-	<label for='content'>What's on your mind, hmm?</label><br>
-	<textarea name='content' id='content'></textarea>
+	<textarea id='post_form' name='content' onfocus="this.value=''">What's on your mind, hmm?</textarea>
 
 	<br><br>
-	<input type='submit' value='New post'>
+	<input id='post_button' type='submit' value='New post'>
 
 </form>

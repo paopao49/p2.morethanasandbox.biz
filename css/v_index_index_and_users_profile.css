@@ -1,15 +1,15 @@
-/*need to qualify using .profile_body to separate CSS of body links from CSS of header links*/
+/*This CSS is shared between v_index_index and v_users_profile because the pages are essentailly the same*/
 
-.profile_body h1 {
+h1 {
 	margin-top: 20px;
 	font-size: 20px;
 }
 
-.profile_body #app_buttons {
+#app_buttons {
 	margin-top: 40px;
 }
 
-.profile_body a, .profile_body a:link, .profile_body a:visited, .profile_body a:active {
+#app_buttons a, #app_buttons a:link, #app_buttons a:visited, #app_buttons a:active {
 	text-decoration: none;
 	color: #191919;	
 	background-color: #DFE2DB;
@@ -17,9 +17,10 @@
 	margin: 0px 2px;	
 }
 
-.profile_body a:hover {
+#app_buttons a:hover {
 	text-decoration: none;
 	color: #191919;
 	background-color: #FFF056;	
 	padding: 44px;
 }
+

@@ -1,5 +1,4 @@
 <!-- Home page if signed in -->
-<div class='index_body'>
 <?php if($user): ?>
 
 	<h1>Hi <?=$user->first_name?>!</h1>
@@ -31,4 +30,3 @@
 	<a href="/users/login">Log In</a>
 
 <?php endif; ?>
-</div>

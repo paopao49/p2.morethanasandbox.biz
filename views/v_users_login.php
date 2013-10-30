@@ -14,12 +14,12 @@
 
 	<?php if($error == 'no_email'): ?>
 
-		<div class="error">No email registered with us. Sign up today!</div>
+		<div id="error">No email registered with us. Sign up today!</div>
 		<br>
 
 	<?php elseif($error == 'no_token'): ?>
 
-		<div class="error">Incorrect password. Please try again.</div>
+		<div id="error">Incorrect password. Please try again.</div>
 		<br>
 
 	<?php endif; ?>

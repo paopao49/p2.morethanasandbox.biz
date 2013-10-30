@@ -15,7 +15,7 @@
 <body>	
 
 	<!-- Menu that is persistent throughout application -->
-	<div id='menu'>
+	<div class='menu'>
 
 		<!-- Home link -->
 		<a href='/'>Chatster</a>

@@ -207,7 +207,7 @@ class users_controller extends base_controller {
         $this->template->title = $this->user->first_name;
 
         $client_files_head = Array(
-            "/css/v_users_profile.css"
+            "/css/v_index_index_and_users_profile.css"
         );
 
         $this->template->client_files_head = Utils::load_client_files($client_files_head);        

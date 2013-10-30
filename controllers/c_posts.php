@@ -17,6 +17,12 @@ class posts_controller extends base_controller {
 		$this->template->content->user_id = $this->user->user_id;
 		$this->template->content->error = $error;		
 
+        $client_files_head = Array(
+            "/css/v_posts_index.css"
+        );
+
+        $this->template->client_files_head = Utils::load_client_files($client_files_head); 		
+
 		# Always see own posts in addition to posts of users followed
 		# Sort in reverse chronological order
 		# Add like/unlike flag - likes.liked will be null if user has not liked post
@@ -86,6 +92,12 @@ class posts_controller extends base_controller {
 		$this->template->content = View::instance('v_posts_add');
 		$this->template->title = "New Post";
 
+        $client_files_head = Array(
+            "/css/v_posts_add.css"
+        );
+
+        $this->template->client_files_head = Utils::load_client_files($client_files_head); 				
+
 		echo $this->template;
 	}
 
@@ -132,6 +144,12 @@ class posts_controller extends base_controller {
 		$this->template->content = View::instance("v_posts_users");
 		$this->template->title = "Users";
 		$this->template->content->error = $error;
+
+        $client_files_head = Array(
+            "/css/v_posts_users.css"
+        );
+
+        $this->template->client_files_head = Utils::load_client_files($client_files_head);        
 
 		# Filter out self so user cannot follow self
 		$q = "

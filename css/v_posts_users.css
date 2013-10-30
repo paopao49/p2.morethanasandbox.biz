@@ -1,0 +1,36 @@
+div.user_row {
+	width: 70%;
+	text-align: left;	
+	padding: 10px 0px 10px 10px;
+	margin: 5px auto;
+	background-color: #DFE2DB;
+}
+
+div.user_row a {
+	float: right;
+	text-decoration: none;
+	color: #191919;
+}
+
+a.follow {
+	padding: 10px;
+	margin-top: -10px;
+}
+
+a.follow:active {
+	color: #191919;
+	background-color: #FFFFFF;
+}
+
+a.unfollow {
+	padding: 10px;
+	margin-top: -10px;
+	background-color: #FFF056;	
+}
+
+a.unfollow:active {
+	color: #FFFFFF;
+	background-color: #191919;	
+}
+
+
