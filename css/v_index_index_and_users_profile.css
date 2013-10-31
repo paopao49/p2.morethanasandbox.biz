@@ -5,21 +5,16 @@ h1 {
 	font-size: 20px;
 }
 
-#app_buttons {
-	margin-top: 40px;
-}
-
 #app_buttons a, #app_buttons a:link, #app_buttons a:visited, #app_buttons a:active {
 	text-decoration: none;
 	color: #191919;	
 	background-color: #DFE2DB;
 	padding: 45px;
-	margin: 0px 2px;	
+	display: inline-block;
+	margin: 0px 2px 5px 2px;	
 }
 
 #app_buttons a:hover {
-	text-decoration: none;
-	color: #191919;
 	background-color: #FFF056;	
 	padding: 44px;
 }
