@@ -16,17 +16,23 @@
 <!-- Home page if not signed in -->
 <?php else: ?>
 
-	<h1>Welcome to Chatster!</h1>
+	<div id='registration_wrapper'>
+		<a href="/users/signup">Sign up!</a>
+		<br><br>
 
-	<p>Extra features:</p>
-	<ul>
-		<li>Ability to delete posts</li>
-		<li>Ability to like or unlike posts (as well as like counter)</li>
-	</ul>	
+		<a href="/users/login">Log In</a>
+	</div>
 
-	<a href="/users/signup">Sign up!</a>
-	<br><br>
+	<div id='welcome_wrapper'>
+		<h1>Welcome to Chatster!</h1>
 
-	<a href="/users/login">Log In</a>
+		<p>Extra features:</p>
+		<ul>
+			<li>Ability to delete posts</li>
+			<li>Ability to like or unlike posts (as well as like counter)</li>
+		</ul>
+		
+		<p>&copy; Paolo Oamar 2013</p>
+	</div>	
 
 <?php endif; ?>

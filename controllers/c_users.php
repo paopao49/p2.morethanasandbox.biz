@@ -25,15 +25,11 @@ class users_controller extends base_controller {
             $this->template->title = "Sign up with Chatster!";
             $this->template->content->error = $error;            
 
-            /* for formatting
             $client_files_head = Array(
-                );
-            $this->template->client_files_head = Utils::load_client_files($client_files_head);
+                "/css/v_users_signup_and_users_login.css"
+            );
 
-            $client_files_body = Array(
-                );
-            $this->template->client_files_body = Utils::load_client_files($client_files_body);
-            */
+            $this->template->client_files_head = Utils::load_client_files($client_files_head);        
 
             echo $this->template;
 
@@ -116,15 +112,11 @@ class users_controller extends base_controller {
 
         $this->template->title = "Log in to Chatster!";
 
-        /* for formatting
         $client_files_head = Array(
-            );
-        $this->template->client_files_head = Utils::load_client_files($client_files_head);
+            "/css/v_users_signup_and_users_login.css"
+        );
 
-        $client_files_body = Array(
-            );
-        $this->template->client_files_body = Utils::load_client_files($client_files_body);
-        */
+        $this->template->client_files_head = Utils::load_client_files($client_files_head);        
 
         echo $this->template;
 
@@ -211,15 +203,6 @@ class users_controller extends base_controller {
         );
 
         $this->template->client_files_head = Utils::load_client_files($client_files_head);        
-
-        /*
-        $client_files_body = Array(
-            "/js/profile.min.js",
-            "/js/widgets.min.js"
-            );
-        
-        $this->template->client_files_body = Utils::load_client_files($client_files_body);
-        */
 
         echo $this->template;
 

@@ -1,4 +1,4 @@
-/*This CSS is shared between v_index_index and v_users_profile because the pages are essentailly the same*/
+/*This CSS is shared between v_index_index and v_users_profile because the pages are essentially the same*/
 
 h1 {
 	margin-top: 20px;
@@ -22,5 +22,35 @@ h1 {
 	color: #191919;
 	background-color: #FFF056;	
 	padding: 44px;
+}
+
+#welcome_wrapper {
+	width:50%;
+	height: 200px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#registration_wrapper {
+	width: 50%;
+	float:right;
+	padding-top: 40px;
+}
+
+#registration_wrapper a, #registration_wrapper a:link, #registration_wrapper a:visited, #registration_wrapper a:active {
+	text-decoration: none;
+	color: #191919;	
+	background-color: #DFE2DB;
+	padding: 10px;
+	display: inline-block;
+}
+
+#registration_wrapper a:hover {
+	background-color: #FFF056;
+}
+
+/* turn off sub_menu on index and profile pages to avoid redundant design*/
+div.sub_menu {
+	display: none;
 }
 

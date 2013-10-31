@@ -33,6 +33,15 @@
 		<?php endif; ?>
 
 	</div>
+
+	<div class='sub_menu'>
+		<a href='/posts/users'>Friends</a>
+		<a href='/posts/add'>Post</a>
+		<a href='/posts'>Read</a>
+
+		<!-- empty div to wrap border around floating sub_menu links -->
+		<div id='clear_div'></div>	
+	</div>		
 	<br>
 
 	<?php if(isset($content)) echo $content; ?>

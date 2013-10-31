@@ -2,7 +2,7 @@
 
 	Log in with your account details.<br><br>
 
-	Email<br>
+	Email<br> 
 	<input type='text' name='email'>
 	<br><br>
 
