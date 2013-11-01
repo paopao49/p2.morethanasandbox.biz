@@ -1,7 +1,11 @@
+<!-- Display error if given 'follow_error' variable -->
 <?php if($error == 'follow_error'): ?>
+
     <p id='error'>You cannot follow a user that you are already following or follow a user that does not exist.</p>
+
 <?php endif; ?>
 
+<!-- Display all users in $users -->
 <?php foreach($users as $user): ?>
 
     <div class='user_row'>

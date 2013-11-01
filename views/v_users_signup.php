@@ -1,5 +1,6 @@
 <form method='POST' action='/users/p_signup'>
 
+	<!-- Display error messages if appropriate -->
 	<?php if($error=='error'): ?>
 		<p id='error'>All fields required. Please try again.<p>
 		<br>

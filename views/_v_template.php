@@ -5,6 +5,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
 	
+	<!-- Global CSS template -->
 	<link rel="stylesheet" type="text/css" href="/css/_v_template.css">
 
 	<!-- Controller Specific JS/CSS -->
@@ -20,6 +21,7 @@
 		<!-- Home link -->
 		<a href='/'>Chatster</a>
 
+		<!-- Different menu items based on logged-in status -->
 		<?php if($user): ?>
 
 			<a class='menu_right' href='/users/logout'>Log out</a>			
@@ -34,6 +36,7 @@
 
 	</div>
 
+	<!-- sub_menu only displays on certain pages -->
 	<div class='sub_menu'>
 		<a href='/posts/users'>Friends</a>
 		<a href='/posts/add'>Post</a>

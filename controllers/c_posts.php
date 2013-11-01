@@ -5,10 +5,12 @@ class posts_controller extends base_controller {
 
 		parent::__construct();
 
+		# Posts class only accessible by authenticated users
 		if(!$this->user) {
 			die("Members only. <br><br><a href='/users/login'>Log In</a>");
 		}		
-	}
+
+	} # End of method
 
 	public function index($error = NULL) {
 
@@ -25,7 +27,8 @@ class posts_controller extends base_controller {
 
 		# Always see own posts in addition to posts of users followed
 		# Sort in reverse chronological order
-		# Add like/unlike flag - likes.liked will be null if user has not liked post
+		# Add like/unlike flag - likes.like_id will be null if user has not liked post
+		# Follower_id isn't used - this was included as a result of following class curriculum
 		$q = "
 			SELECT
 				posts.post_id,
@@ -63,29 +66,35 @@ class posts_controller extends base_controller {
 						)
 			ORDER BY 
 				posts.created desc"
-			;
+		; # End of $q
 
+		# Create posts array
 		$posts = DB::instance(DB_NAME)->select_rows($q);
 
+		# Add like_count to every post within $posts
 		foreach($posts as $array_key => &$array) {
 
+				# Pull likes for given post_id
 				$q = "
 					SELECT *
 					FROM likes
 					WHERE
 						post_id =".$array['post_id']
-					;
+				;
 
+				# Count likes for given post_id
 				$post_likes = count(DB::instance(DB_NAME)->select_array($q,'like_id'));
 
+				# Assign like count value to given post
 				$array['like_count'] = $post_likes;
-		}
+
+		} # End of foreach
 
 		$this->template->content->posts = $posts;
 
 		echo $this->template;
 
-	}	
+	} # End of method	
 
 	public function add() {
 
@@ -99,10 +108,12 @@ class posts_controller extends base_controller {
         $this->template->client_files_head = Utils::load_client_files($client_files_head); 				
 
 		echo $this->template;
-	}
+
+	} # End of method
 
 	public function p_add() {
 
+		# Only update 'posts' database if $_POST has values
 		if($_POST) {
 
 			$_POST['user_id'] = $this->user->user_id;
@@ -119,14 +130,15 @@ class posts_controller extends base_controller {
 			Router::redirect("/posts/add");
 		}
 
-	}
+	} # End of method
 
-	public function delete($post_id_delete) {
+	# Extra feature: delete posts
+	public function delete($post_id_delete = NULL) {
 
 		# Error checking if method is called without argument
 		if(!$post_id_delete) {
 
-			Router::redirect("/posts/users");
+			Router::redirect("/posts/");
 
 		}			
 
@@ -136,8 +148,8 @@ class posts_controller extends base_controller {
 		DB::instance(DB_NAME)->delete('posts', $where_for_delete);
 
 		Router::redirect("/posts/");
-	}
 
+	} # End of method
 
 	public function users($error = NULL) {
 
@@ -157,25 +169,25 @@ class posts_controller extends base_controller {
 			FROM users
 			WHERE
 				user_id !=".$this->user->user_id
-			;
+		;
 
 		$users = DB::instance(DB_NAME)->select_rows($q);
 
-		$q = "
+		$q2 = "
 			SELECT *
 			FROM users_users
 			WHERE
 				user_id = ".$this->user->user_id
-			;		
+		;		
 
-		$connections = DB::instance(DB_NAME)->select_array($q, 'user_id_followed');
+		$connections = DB::instance(DB_NAME)->select_array($q2, 'user_id_followed');
 
 		$this->template->content->users = $users;
 		$this->template->content->connections = $connections;
 
 		echo $this->template;
 
-	}
+	} # End of method
 
 	public function follow($user_id_followed = NULL) {
 
@@ -186,6 +198,7 @@ class posts_controller extends base_controller {
 
 		} else {
 
+			# Used to test if $user_id_followed is already being followed
 	        $q_follow_user = "
 	            SELECT user_id_followed
 	            FROM users_users
@@ -196,6 +209,7 @@ class posts_controller extends base_controller {
 
 	        $followed_user = DB::instance(DB_NAME)->select_field($q_follow_user);	
 
+	        # Used to test if $user_id_followed exists
 	        $q_any_user = "
 	            SELECT user_id
 	            FROM users
@@ -217,15 +231,17 @@ class posts_controller extends base_controller {
 					"created" => Time::now(),
 					"user_id" => $this->user->user_id,
 					"user_id_followed" => $user_id_followed
-					);
+				);
 
 				DB::instance(DB_NAME)->insert('users_users', $data);
 
 				Router::redirect("/posts/users");
 
-			}
-		}
-	}
+			} # End of inner else 
+
+		} # End of outer else
+
+	} # End of method
 
 	public function like($post_id_like = NULL) {
 
@@ -236,6 +252,7 @@ class posts_controller extends base_controller {
 
 		} else {
 
+			# Used to test if $post_id_like is already being liked
 	        $q_user_like = "
 	            SELECT like_id
 	            FROM likes
@@ -246,6 +263,7 @@ class posts_controller extends base_controller {
 
 	        $user_like = DB::instance(DB_NAME)->select_field($q_user_like);	
 
+	        # Used to test if post that user is trying to like exists
 	        $q_any_like = "
 	            SELECT post_id
 	            FROM posts
@@ -273,9 +291,11 @@ class posts_controller extends base_controller {
 
 				Router::redirect("/posts/");
 
-			}
-		}
-	}
+			} # End of inner else
+			
+		} # End of outer else
+		
+	} # End of method
 
 	public function unfollow($user_id_followed) {
 

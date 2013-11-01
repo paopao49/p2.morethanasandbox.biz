@@ -11,7 +11,6 @@
 	<br><br>
 
 	<!-- When appropriate, display error messages -->
-
 	<?php if($error == 'no_email'): ?>
 
 		<div id="error">No email registered with us. Sign up today!</div>

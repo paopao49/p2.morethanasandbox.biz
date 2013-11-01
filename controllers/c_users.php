@@ -10,12 +10,15 @@ class users_controller extends base_controller {
     public function index() {
 
         if(!$this->user) {
+
             Router::redirect("/users/login");
+
         } else {
+
             Router::redirect("/");
         }
         
-    }
+    } # End of method
 
     public function signup($error = NULL) {
 
@@ -38,10 +41,11 @@ class users_controller extends base_controller {
             Router::redirect("/");
 
         }
-    }
+    } # End of method
 
     public function p_signup() {
 
+        # Only allow if $_POST is not null
         if($_POST) {
 
             # Test if all fields are entered
@@ -55,6 +59,7 @@ class users_controller extends base_controller {
 
             } else {
 
+                # Used to test if user is registering with email that is already registered
                 $q_email = "
                     SELECT email
                     FROM users
@@ -85,7 +90,7 @@ class users_controller extends base_controller {
                         FROM users
                         WHERE
                             user_id = ".$user_id
-                        ;
+                    ;
 
                     $token = DB::instance(DB_NAME)->select_field($q_token);
 
@@ -93,24 +98,25 @@ class users_controller extends base_controller {
 
                     Router::redirect("/");
 
-                }
-            }
+                } # End of inner else
+
+            } # End of outer else
 
         } else {
 
             Router::redirect("/users/signup");
 
         }
-    }
+    } # End of method
 
     public function login($error = NULL) {
 
+        # Redirect users already logged in to home page
         if(!$this->user) {
 
         $this->template->content = View::instance('v_users_login');
-        $this->template->content->error = $error;
-
         $this->template->title = "Log in to Chatster!";
+        $this->template->content->error = $error;        
 
         $client_files_head = Array(
             "/css/v_users_signup_and_users_login.css"
@@ -126,42 +132,50 @@ class users_controller extends base_controller {
 
         }
 
-    }
+    } # End of method
     
     public function p_login() {
 
+        # Redirect to home page if $_POST is null
         if($_POST) {
 
             $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
             $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
+            # Only get token if password matches
             $q_token = "
                 SELECT token
                 FROM users
                 WHERE
                     email = '".$_POST['email']."'
                     AND password = '".$_POST['password']."'
-                ";
+            ";
 
             $q_email = "
                 SELECT email
                 FROM users
                 WHERE
                     email = '".$_POST['email']."'
-                ";
+            ";
 
+            # Get token given user credentials
             $token = DB::instance(DB_NAME)->select_field($q_token);
+
+            # Get email given user credentials
             $em = DB::instance(DB_NAME)->select_field($q_email);
 
+            # No email error redirect
             if(!$em) {
 
                 Router::redirect("/users/login/no_email");
 
+            # Wrong password redirect
             } elseif(!$token) {
 
                 Router::redirect("/users/login/no_token");
 
+            # Successful login
             } else {
 
                 setcookie("token",$token,strtotime('+1 year'),'/');
@@ -173,7 +187,8 @@ class users_controller extends base_controller {
 
             Router::redirect("/");
         }
-    }
+
+    } # End of method
     
 
     public function logout() {

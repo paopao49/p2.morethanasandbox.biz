@@ -44,7 +44,7 @@ h1 {
 	background-color: #FFF056;
 }
 
-/* turn off sub_menu on index and profile pages to avoid redundant design*/
+/* Turn off sub_menu on index and profile pages*/
 div.sub_menu {
 	display: none;
 }

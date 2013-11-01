@@ -1,7 +1,7 @@
 <h1>Your name is <?=$user->first_name?>!</h1>
 <br>
 
-<!-- Groups app buttons together -->
+<!-- Group app buttons together -->
 <div id='app_buttons'>
 	<a href="/posts/users">Make friends.</a>
 

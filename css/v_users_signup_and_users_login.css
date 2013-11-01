@@ -1,5 +1,5 @@
-/* Turn off sub_menu on index and profile pages to avoid redundant design
-This CSS is shared between v_index_index and v_users_profile because the pages are essentially the same*/
+/* Turn off sub_menu on signup and login pages.
+This CSS is shared between v_users_signup and v_users_login because the pages are essentially the same*/
 div.sub_menu {
 	display: none;
 }

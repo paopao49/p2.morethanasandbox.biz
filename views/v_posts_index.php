@@ -1,10 +1,14 @@
+<!-- Error message given 'like_error' parameter -->
 <?php if($error == 'like_error'): ?>
+
     <p id='error'>You can't like a post that you already like or like a post that doesn't exist.</p>
+
 <?php endif; ?>
 
+<!-- Display following message if user has no posts to show -->
 <?php if(!$posts): ?>
 
-	<p>Either you haven't made any posts or you aren't following anyone!<p>
+	<p>Either you haven't made any posts or you aren't following anyone!</p>
 	<br><br>
 
 	<a id='button' href='/posts/users'>Make friends!</a>
@@ -13,29 +17,30 @@
 
 <?php else: ?>
 
+	<!-- Display each $post in $posts array -->
 	<?php foreach($posts as $post): ?>
 
 		<article class='post_row'>
 
-			<!-- Display "like" if a post as one like, otherwise show "likes" for plural -->
+			<!-- Display "like" if a post has one like, otherwise show "likes" for plural -->
 			<?php if($post['like_count'] == 1): ?>
 
-					<span class='like_display'>1 like</span>
+				<span class='like_display'>1 like</span>
 
-				<?php else: ?>
+			<?php else: ?>
 
-					<span class='like_display'><?=$post['like_count']?> likes</span>
+				<span class='like_display'><?=$post['like_count']?> likes</span>
 
 			<?php endif; ?>
 
 			<!-- like/unlike button -->
 			<?php if(!$post['like_id']): ?>
 
-					<span class='like_button'><a href='/posts/like/<?=$post['post_id']?>'>Like</a></span>
+				<span class='like_button'><a href='/posts/like/<?=$post['post_id']?>'>Like</a></span>
 
-				<?php else: ?>
+			<?php else: ?>
 
-					<span class='like_button'><a href='/posts/unlike/<?=$post['post_id']?>'>Unlike</a></span>
+				<span class='like_button'><a href='/posts/unlike/<?=$post['post_id']?>'>Unlike</a></span>
 
 			<?php endif; ?>
 
