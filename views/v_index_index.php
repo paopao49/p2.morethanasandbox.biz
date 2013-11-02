@@ -1,3 +1,10 @@
+<!-- Display error if given 'error' variable -->
+<?php if($error == 'error'): ?>
+
+	<p id='error'>You tried to access a members only area. Please log in.<p>
+
+<?php endif; ?>
+
 <!-- Home page if signed in -->
 <?php if($user): ?>
 

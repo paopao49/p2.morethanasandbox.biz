@@ -11,9 +11,9 @@
 	<p>Either you haven't made any posts or you aren't following anyone!</p>
 	<br><br>
 
-	<a id='button' href='/posts/users'>Make friends!</a>
+	<a class='button' href='/posts/users'>Make friends!</a>
 
-	<a id='button' href='/posts/add'>Make a post!</a>
+	<a class='button' href='/posts/add'>Make a post!</a>
 
 <?php else: ?>
 
@@ -51,9 +51,9 @@
 			<p class='name_display'><?=$post['first_name']?> <?=$post['last_name']?></p>
 
 			<!-- Publication time of post -->
-			<time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
+			<p class='time'>
 				<?=Time::display($post['created'])?>
-			</time>
+			</p>
 
 			<!-- Delete post feature. User can only delete own posts. -->
 			<?php if($user_id == $post['post_user_id']): ?>
@@ -63,7 +63,7 @@
 			<?php endif; ?>			
 
 			<!-- Blank div for float clearing purposes -->
-			<div id='clear_block'></div>
+			<div class='clear_block'></div>
 
 		</article>
 

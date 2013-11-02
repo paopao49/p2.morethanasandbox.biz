@@ -6,7 +6,7 @@ class index_controller extends base_controller {
 		parent::__construct();
 	} 
 
-	public function index() {
+	public function index($error = NULL) {
 		
 		# Any method that loads a view will commonly start with this
 		# First, set the content of the template with a view file
@@ -14,6 +14,9 @@ class index_controller extends base_controller {
 			
 		# Now set the <title> tag
 			$this->template->title = "Chatster";
+
+		# Load any passed errors
+			$this->template->content->error = $error;	
 	
 		# CSS/JS includes
 			$client_files_head = Array(

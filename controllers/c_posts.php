@@ -7,7 +7,7 @@ class posts_controller extends base_controller {
 
 		# Posts class only accessible by authenticated users
 		if(!$this->user) {
-			die("Members only. <br><br><a href='/users/login'>Log In</a>");
+			Router::redirect("/index/index/error");
 		}		
 
 	} # End of method
